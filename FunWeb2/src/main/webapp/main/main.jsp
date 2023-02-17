@@ -52,6 +52,26 @@
 
 		});
 	});
+		 		
+/* 		 		$(document).ready(function(){ 
+		 			$('.brown').click(function(){
+		 				alert("클릭");
+		 				
+		 				$('table').html('');
+		 				
+		 				$.ajax({
+		 					url:'jsonArray.jsp',
+		 					dataType:'json',
+		 					success:function(arr){
+		 						$.each(arr,function(index,item){
+		 							$('table').append('<tr><td class="contxt"><a href="#">'+item.subject+'</a></td><td>'+item.date+'</td></tr>');
+		 						});		
+		 					}
+		 				
+		 				});
+
+		 			});
+		 		}); */
 </script>
 </head>
 <body>

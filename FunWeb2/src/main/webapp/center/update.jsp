@@ -1,3 +1,4 @@
+<%@page import="com.itwillbs.board.db.boardDTO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -49,12 +50,14 @@
 <h1>Notice Write</h1>
 <%
 String id=(String)session.getAttribute("id");
+boardDTO dto = (boardDTO)request.getAttribute("dto");
 %>
-<form action="BoardWritePro.bo" method="post">
+<form action="BoardUpdatePro.bo" method="post">
+<input type="hidden" name="num" value="<%=dto.getNum()%>">
 <table id="notice">
    <tr><td>글쓴이</td><td><input type="text" name="name" value="<%=id%>" readonly></tr>
-   <tr><td>글제목</td><td><input type="text" name="name" value=""></tr>
-   <tr><td>글내용</td><td><textarea name="content" rows="10" cols="20"></textarea></tr>
+   <tr><td>글제목</td><td><input type="text" name="subject" value="<%=dto.getSubject()%>"></tr>
+   <tr><td>글내용</td><td><textarea name="content" rows="10" cols="20"><%=dto.getContent()%></textarea></tr>
 </table>
 <div id="table_search">
 <input type="submit" value="글쓰기" class="btn">

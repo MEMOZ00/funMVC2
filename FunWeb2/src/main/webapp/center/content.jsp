@@ -1,3 +1,4 @@
+<%@page import="com.itwillbs.board.db.boardDTO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -43,26 +44,41 @@
 </ul>
 </nav>
 <!-- 왼쪽메뉴 -->
-
+<%
+boardDTO dto = (boardDTO)request.getAttribute("dto");
+%>
 <!-- 게시판 -->
 <article>
-<h1>Notice Write</h1>
-<%
-String id=(String)session.getAttribute("id");
-%>
-<form action="BoardWritePro.bo" method="post">
+<h1>Notice Content</h1>
+
 <table id="notice">
-   <tr><td>글쓴이</td><td><input type="text" name="name" value="<%=id%>" readonly></tr>
-   <tr><td>글제목</td><td><input type="text" name="name" value=""></tr>
-   <tr><td>글내용</td><td><textarea name="content" rows="10" cols="20"></textarea></tr>
+<tr><td>글번호</td><td><%=dto.getNum() %></td></tr>
+<tr><td>작성자</td><td><%=dto.getName() %></td></tr>
+<tr><td>글쓴날짜</td><td><%=dto.getDate() %></td></tr>
+<tr><td>조회수</td><td><%=dto.getReadcount() %></td></tr>
+<tr><td>글제목</td><td><%=dto.getSubject() %></td></tr>
+<tr><td>글내용</td><td><%=dto.getContent() %></td></tr>
 </table>
+
 <div id="table_search">
-<input type="submit" value="글쓰기" class="btn">
+<input type="button" value="글목록" class="btn" onclick="location.href='BoardList.bo'">
 </div>
-</form>
+
+<%
+String id = (String)session.getAttribute("id");
+if(id != null) {
+	if(id.equals(dto.getName())) {
+		%>
+		<input type="button" value="글수정" class="btn" onclick="location.href='BoardUpdateForm.bo?num=<%=dto.getNum() %>'">
+		<input type="button" value="글삭제" class="btn" onclick="location.href='BoardDeletePro.bo?num=<%=dto.getNum() %>'">
+<% 
+	}
+}
+%>
 
 <div class="clear"></div>
 <div id="page_control">
+
 </div>
 </article>
 <!-- 게시판 -->
