@@ -40,7 +40,7 @@
 			$('table').html('');
 			
 			$.ajax({
-				url:'jsonArray.jsp',
+				url:'BoardJson.bo',
 				dataType:'json',
 				success:function(arr){
 					$.each(arr,function(index,item){

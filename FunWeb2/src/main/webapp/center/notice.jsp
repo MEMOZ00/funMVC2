@@ -76,7 +76,10 @@ int currentPage = (Integer)request.getAttribute("currentPage");
 int startPage = (Integer)request.getAttribute("startPage");
 int pageBlock = (Integer)request.getAttribute("pageBlock");
 int endPage= (Integer)request.getAttribute("endPage");
-int allPage = (Integer)request.getAttribute("allPage");
+int count = (Integer)request.getAttribute("count");
+int pageCount = (Integer)request.getAttribute("pageCount");
+
+String search = (String)request.getAttribute("search");
 %>
 <!-- 게시판 -->
 <article>
@@ -105,49 +108,58 @@ int allPage = (Integer)request.getAttribute("allPage");
 </table>
 
 <div id="table_search">
-<input type="text" name="search" class="input_box">
-<input type="button" value="검색" class="btn" onclick="location.href='BoardWriteForm.bo'">
-<%
-String id =(String)session.getAttribute("id");
-if(id!=null) {
-%>
-	<input type="button" value="글쓰기" class="btn" onclick="location.href='BoardWriteForm.bo'">
-<%
-}
-%>
+
+	<form action="BoardList.bo" method="post">
+	<input type="text" name="search" class="input_box">
+	<input type="submit" value="search" class="btn">
+	<%
+	String id =(String)session.getAttribute("id");
+	if(id!=null) {
+	%>
+		<input type="button" value="글쓰기" class="btn" onclick="location.href='BoardWriteForm.bo'">
+	<%
+	}
+	%>
+	</form>
+
 </div>
+
 <div class="clear"></div>
 <div id="page_control">
-<%-- <% 
-// startPage~endPage 1~10, 11~20, 21~30
-int pageBlock = 10;
-int startPage = (currentPage-1)/pageBlock*pageBlock+1;
-int endPage = startPage+pageBlock-1;
-//총 게시글 수
-int allPage = dao.getBoardPage();
-// 나타낼 페이지 수
-int pageCount = allPage/pageSize+(allPage%pageSize==0?0:1);
-// endPage 재설정
-if(endPage > pageCount) {
-	endPage = pageCount;
-}
-//
-%> --%>
+
 <%
-if(startPage > pageBlock) {
-%>
-	<a href="BoardList.bo?pageNum=<%= currentPage-pageBlock%>">[10페이지 이전]</a>
-<% 
-}
-for(int i = startPage; i <= endPage; i++) {	
-%>
-	<a href="BoardList.bo?pageNum=<%= i%>"><%= i%></a> 
-<% 
-}
-if(endPage > allPage) {
-%>
-	<a href="BoardList.bo?pageNum=<%= currentPage+pageBlock%>">[10페이지 다음]</a> 
-<%
+if(search==null) { 
+	if(startPage > pageBlock) {
+	%>
+		<a href="BoardList.bo?pageNum=<%= startPage-pageBlock%>">[10페이지 이전]</a>
+	<% 
+	}
+	for(int i = startPage; i <= endPage; i++) {	
+	%>
+		<a href="BoardList.bo?pageNum=<%= i%>"><%= i%></a> 
+	<% 
+	}
+	if(endPage < pageCount) {
+	%>
+		<a href="BoardList.bo?pageNum=<%= startPage+pageBlock%>">[10페이지 다음]</a> 
+	<%
+	}
+}else { 
+	if(startPage > pageBlock) {
+	%>
+		<a href="BoardList.bo?pageNum=<%= startPage-pageBlock%>&search=<%=search%>">[10페이지 이전]</a>
+	<% 
+	}
+	for(int i = startPage; i <= endPage; i++) {	
+	%>
+		<a href="BoardList.bo?pageNum=<%= i%>&search=<%=search%>"><%= i%></a> 
+	<% 
+	}
+	if(endPage < pageCount) {
+	%>
+		<a href="BoardList.bo?pageNum=<%= startPage+pageBlock%>&search=<%=search%>">[10페이지 다음]</a> 
+	<%
+	}
 }
 %>
 </div>

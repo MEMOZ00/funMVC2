@@ -94,6 +94,15 @@ public class BoardFrontController extends HttpServlet {
 			} 
 		}
 		
+		else if(sPath.equals("/BoardJson.bo")) {
+			action = new BoardJson();
+			try {
+				forward = action.execute(request, response);
+			} catch(Exception e) {
+				e.printStackTrace();
+			} 
+		}
+		
 		
 			if(forward != null) {
 				//이동방식비교

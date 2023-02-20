@@ -92,6 +92,44 @@ public class boardDAO {
 		return dtolist;
 	}
 	
+	public ArrayList<boardDTO> getBoardList(int start, int num, String search) {
+		ArrayList<boardDTO> dtolist = new ArrayList<>();
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {	
+			con = getConnection();
+			
+//			String sql="select * from board where subject like '%검색어%' order by num desc limit ?, ?";
+			String sql="select * from board where subject like ? order by num desc limit ?, ?";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setString(1, "%"+search+"%");
+			pstmt.setInt(2, start);
+			pstmt.setInt(3, num);
+			 
+			rs=pstmt.executeQuery();
+			
+			while(rs.next()) {
+				boardDTO dto = new boardDTO();
+				dto.setNum(rs.getInt("num"));
+				dto.setName(rs.getString("name"));
+				dto.setSubject(rs.getString("subject"));
+				dto.setReadcount(rs.getInt("readcount"));
+				dto.setDate(rs.getTimestamp("date"));
+				dto.setFile(rs.getString("file"));
+				dtolist.add(dto);
+		}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(pstmt!=null) try { pstmt.close();} catch (Exception e2) {}
+			if(con!=null) try { con.close();} catch (Exception e2) {}
+			if(rs!=null) try { rs.close();} catch (Exception e2) {}
+		}
+		return dtolist;
+	}
+	
+	
 	public boardDTO getBoard(int num) {
 		boardDTO dto = null;
 		Connection con = null;
@@ -203,6 +241,33 @@ public class boardDAO {
 			
 			String sql="select count(*) from board";
 			pstmt=con.prepareStatement(sql);
+ 
+			rs=pstmt.executeQuery();
+			
+			if(rs.next()) {
+				allPage = rs.getInt("count(*)");
+		}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(pstmt!=null) try { pstmt.close();} catch (Exception e2) {}
+			if(con!=null) try { con.close();} catch (Exception e2) {}
+			if(rs!=null) try { rs.close();} catch (Exception e2) {}
+		}
+		return allPage;
+	}
+	
+	public int getBoardPage(String search) {
+		int allPage = 0;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {	
+			con = getConnection();
+			
+			String sql="select count(*) from board where subject like ?";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setString(1, "%"+search+"%");
  
 			rs=pstmt.executeQuery();
 			
