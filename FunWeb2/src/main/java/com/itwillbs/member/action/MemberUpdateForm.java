@@ -8,24 +8,26 @@ import com.itwillbs.member.db.MemberDAO;
 import com.itwillbs.member.db.MemberDTO;
 
 public class MemberUpdateForm implements Action{
-
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		System.out.println("MemberUpdateForm excute()");
-		// session값 가져오기
-		HttpSession session = request.getSession();
-		String id = (String)session.getAttribute("id");
+		System.out.println("MemberUpdateForm execute()");
+		// 세션 객체생성
+		//String id = 세션값 가져오기
+		HttpSession session=request.getSession();
+		String id=(String)session.getAttribute("id");
 		
-		MemberDAO dao = new MemberDAO();
-		MemberDTO dto = dao.getMember(id);
+		// MemberDAO 객체생성 
+		// MemberDTO dto = getMember() 메서드 호출
+		MemberDAO dao=new MemberDAO();
+		MemberDTO dto=dao.getMember(id);
 		
+		// request dto 저장
 		request.setAttribute("dto", dto);
 		
-		ActionForward forward = new ActionForward();
+		// member/update.jsp 이동
+		ActionForward forward=new ActionForward();
 		forward.setPath("member/update.jsp");
 		forward.setRedirect(false);
-		
 		return forward;
 	}
-	
 }

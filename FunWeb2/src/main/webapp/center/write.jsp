@@ -52,9 +52,12 @@ String id=(String)session.getAttribute("id");
 %>
 <form action="BoardWritePro.bo" method="post">
 <table id="notice">
-   <tr><td>글쓴이</td><td><input type="text" name="name" value="<%=id%>" readonly></tr>
-   <tr><td>글제목</td><td><input type="text" name="name" value=""></tr>
-   <tr><td>글내용</td><td><textarea name="content" rows="10" cols="20"></textarea></tr>
+   <tr><td>글쓴이</td>
+       <td><input type="text" name="name" value="<%=id %>" readonly></td></tr>
+   <tr><td>글제목</td>
+       <td><input type="text" name="subject" ></td></tr>
+   <tr><td>글내용</td>
+<td><textarea name="content" rows="10" cols="20"></textarea></td></tr>              
 </table>
 <div id="table_search">
 <input type="submit" value="글쓰기" class="btn">

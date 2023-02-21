@@ -10,48 +10,37 @@ import com.itwillbs.member.db.MemberDAO;
 import com.itwillbs.member.db.MemberDTO;
 
 public class MemberLoginPro implements Action{
-
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		System.out.println("MemberLoginPro excute()");
-		
+		System.out.println("MemberLoginPro execute()");
+		// request 가져오기
 		String id=request.getParameter("id");
 		String pass=request.getParameter("pass");
-		
-		MemberDAO dao = new MemberDAO();
-		MemberDTO dto = dao.userCheck(id, pass);
-		
-		ActionForward forward = null;
-		
-		if(dto !=null){	
-			HttpSession session = request.getSession();
+		// MemberDAO 객체생성
+		MemberDAO dao=new MemberDAO();
+		// MemberDTO = userCheck() 메서드호출
+		MemberDTO dto=dao.userCheck(id, pass);
+// dto != null 아이디 비밀번호 일치 세션값 생성 MemberMain.me 이동
+//                   아이디 비밀번호 틀림 , 뒤로이동	
+		ActionForward forward=null;
+		if(dto!=null) {
+			//아이디 비밀번호 일치
+			HttpSession session=request.getSession();
 			session.setAttribute("id", id);
 			
-			forward = new ActionForward();
+			forward=new ActionForward();
 			forward.setPath("MemberMain.me");
 			forward.setRedirect(true);
 			
-		}else{
-			// id, pass 틀리면 MemberDTO 빈(null) 바구니 가져오기
-			// => script   "아이디 비밀번호 틀림" 뒤로이동
-//		    <script type="text/javascript">
-//				alert("아이디 비밀번호 틀림");
-//				history.back();
-//		    </script>
-			response.setContentType("text/html; charset=UTF-8"); // 자바에서 html(자바스크립트) 동작 코드 생성
-			
-			PrintWriter out = response.getWriter();
-			out.println("<script type='text/javascript'>"); // PrintWrite 자바 출력클래스, response(HttServlet 클래스 내장객체)
+		}else {
+			response.setContentType("text/html; charset=UTF-8");
+			PrintWriter out=response.getWriter();
+			out.println("<script type='text/javascript'>");
 			out.println("alert('아이디 비밀번호 틀림');");
 			out.println("history.back();");
 			out.println("</script>");
-			out.close();	
-			//이동정보
-			forward = null;
+			out.close();
 		}
-		
 		return forward;
-		
 	}
-	
 }

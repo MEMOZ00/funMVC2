@@ -1,3 +1,4 @@
+<%@page import="com.itwillbs.board.db.BoardDTO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -29,38 +30,51 @@
 <!-- 헤더들어가는 곳 -->
 
 <!-- 본문들어가는 곳 -->
-<!-- 본문메인이미지 -->
-<div id="sub_img_member"></div>
-<!-- 본문메인이미지 -->
+<!-- 메인이미지 -->
+<div id="sub_img_center"></div>
+<!-- 메인이미지 -->
+
 <!-- 왼쪽메뉴 -->
 <nav id="sub_menu">
 <ul>
-<li><a href="#">Join us</a></li>
-<li><a href="#">Privacy policy</a></li>
+<li><a href="#">Notice</a></li>
+<li><a href="#">Public News</a></li>
+<li><a href="#">Driver Download</a></li>
+<li><a href="#">Service Policy</a></li>
 </ul>
 </nav>
 <!-- 왼쪽메뉴 -->
-<!-- 본문내용 -->
+
+<!-- 게시판 -->
 <article>
-<h1>Login</h1>
-<form action="MemberLoginPro.me" id="join" method="post">
-<fieldset>
-<legend>Login Info</legend>
-<label>User ID</label>
-<input type="text" name="id"><br>
-<label>Password</label>
-<input type="password" name="pass"><br>
-</fieldset>
-<div class="clear"></div>
-<div id="buttons">
-<input type="submit" value="Submit" class="submit">
-<input type="reset" value="Cancel" class="cancel">
+<h1>Notice ReWrite</h1>
+<%
+String id=(String)session.getAttribute("id");
+BoardDTO dto=(BoardDTO)request.getAttribute("dto");
+%>
+<form action="ReBoardWritePro.bo" method="post">
+<input type="hidden" name="re_ref" value="<%=dto.getRe_ref()%>">
+<input type="hidden" name="re_lev" value="<%=dto.getRe_lev()%>">
+<input type="hidden" name="re_seq" value="<%=dto.getRe_seq()%>">
+<table id="notice">
+   <tr><td>글쓴이</td>
+       <td><input type="text" name="name" value="<%=id %>" readonly></td></tr>
+   <tr><td>글제목</td>
+       <td><input type="text" name="subject" value="[답글]"></td></tr>
+   <tr><td>글내용</td>
+<td><textarea name="content" rows="10" cols="20"></textarea></td></tr>              
+</table>
+<div id="table_search">
+<input type="submit" value="글쓰기" class="btn">
 </div>
 </form>
-</article>
-<!-- 본문내용 -->
-<!-- 본문들어가는 곳 -->
 
+<div class="clear"></div>
+<div id="page_control">
+</div>
+</article>
+<!-- 게시판 -->
+<!-- 본문들어가는 곳 -->
 <div class="clear"></div>
 <!-- 푸터들어가는 곳 -->
 <jsp:include page="../inc/bottom.jsp" />

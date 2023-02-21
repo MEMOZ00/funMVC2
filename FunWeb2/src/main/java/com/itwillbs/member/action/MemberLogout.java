@@ -8,16 +8,16 @@ public class MemberLogout implements Action{
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		System.out.println("MemberLogout excute()");
-		
-		HttpSession session = request.getSession();
+		System.out.println("MemberLogout execute()");
+		//세션 초기화
+		HttpSession session=request.getSession();
 		session.invalidate();
 		
-		ActionForward forward = new ActionForward();
+		//이동 MemberMain.me
+		ActionForward forward=new ActionForward();
 		forward.setPath("MemberMain.me");
 		forward.setRedirect(true);
-		
 		return forward;
 	}
-	
+
 }

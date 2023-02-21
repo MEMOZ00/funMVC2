@@ -9,31 +9,29 @@ import com.itwillbs.member.db.MemberDAO;
 import com.itwillbs.member.db.MemberDTO;
 
 public class MemberIdCheck implements Action{
-
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		System.out.println("MemberIdCheck excute()");
-		
-		String id = request.getParameter("id");
-		
-		MemberDAO dao = new MemberDAO();
-		MemberDTO dto = dao.getMember(id);
-		
-		String result = "";
-		// forward 값 넘기지 않고 출력
+		System.out.println("MemberIdCheck execute()");
+		// request  id파라미터 가져오기
+		String id=request.getParameter("id");
+		// MemberDAO 객체생성
+		MemberDAO dao=new MemberDAO();
+		// MemberDTO dto = getMember() 메서드 호출
+		MemberDTO dto=dao.getMember(id);
+		String result="";
+		// dto null 아니면 아이디 있음, 아이디 중복
+		// dto null 이면   아이디 없음, 아이디 사용가능
 		if(dto!=null) {
-			result = "아이디 중복";
-		} else {
-			result = "아이디 사용 가능";
+			result="아이디 중복";
+		}else {
+			result="아이디 사용가능";
 		}
 		
-		response.setContentType("text/html; charset=UTF-8"); // 자바에서 html(자바스크립트) 동작 코드 생성
-		
-		PrintWriter out = response.getWriter(); // PrintWrite 자바 출력클래스, response(HttServlet 클래스 내장객체)
+//		출력 <%=result%>
+		response.setContentType("text/html; charset=UTF-8");
+		PrintWriter out=response.getWriter();
 		out.println(result);
-		out.close();	
-		
+		out.close();
 		return null;
 	}
-
 }

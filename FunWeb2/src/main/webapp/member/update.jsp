@@ -1,5 +1,4 @@
 <%@page import="com.itwillbs.member.db.MemberDTO"%>
-<%@page import="com.itwillbs.member.db.MemberDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -44,10 +43,13 @@
 <!-- 왼쪽메뉴 -->
 <!-- 본문내용 -->
 <%
-String id = (String)session.getAttribute("id");
-/* MemberDAO dao = new MemberDAO();
-MemberDTO dto = dao.getMember(id); */
-MemberDTO dto = (MemberDTO)request.getAttribute("dto");
+// 세션값 가져오기
+String id=(String)session.getAttribute("id");
+// // MemberDAO 객체생성
+// MemberDAO dao=new MemberDAO();
+// // 리턴할형 MemberDTO dto =  getMember(id) 메서드 호출
+// MemberDTO dto=dao.getMember(id);
+MemberDTO dto=(MemberDTO)request.getAttribute("dto");
 %>
 <article>
 <h1>Update Us</h1>
@@ -56,27 +58,23 @@ MemberDTO dto = (MemberDTO)request.getAttribute("dto");
 <legend>Basic Info</legend>
 <label>User ID</label>
 <input type="text" name="id" class="id" value="<%=id%>" readonly>
-<input type="button" value="dup. check" class="dup"><br>
+<br>
 <label>Password</label>
 <input type="password" name="pass"><br>
-<label>Retype Password</label>
-<input type="password" name="pass2"><br>
 <label>Name</label>
 <input type="text" name="name" value="<%=dto.getName()%>"><br>
 <label>E-Mail</label>
-<input type="email" name="email" value="<%-- <%=dto.getEmail()%> --%>"><br>
-<label>Retype E-Mail</label>
-<input type="email" name="email2"><br>
+<input type="email" name="email" value="<%//=dto.getEmail()%>"><br>
 </fieldset>
 
 <fieldset>
 <legend>Optional</legend>
 <label>Address</label>
-<input type="text" name="address" value="<%-- <%=dto.getAddress() --%>"><br>
+<input type="text" name="address" value="<%//=dto.getAddress()%>"><br>
 <label>Phone Number</label>
-<input type="text" name="phone" value="<%-- <%=dto.getPhone() --%>"><br>
+<input type="text" name="phone" value="<%//=dto.getPhone()%>"><br>
 <label>Mobile Phone Number</label>
-<input type="text" name="mobile" value="<%-- <%=dto.getMobile() %> --%>"><br>
+<input type="text" name="mobile" value="<%//=dto.getMobile()%>"><br>
 </fieldset>
 <div class="clear"></div>
 <div id="buttons">

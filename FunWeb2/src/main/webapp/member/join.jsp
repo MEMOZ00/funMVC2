@@ -21,74 +21,107 @@
 
  </script>
  <![endif]-->
-<script type="text/javascript" src="script/jquery-3.6.3.js"></script>
-<script type="text/javascript">
- $(document).ready(function(){
-	 
-	 $('#join').submit(function(){
-		 if($('.id').val()=="") {
-			 alert("아이디 입력하세요");
-			 $('.id').focus();
-			 return false;
-		 }
-		 if($('.pass').val()=="") {
-			 alert("비밀번호 입력하세요");
-			 $('.pass').focus();
-			 return false;
-		 }
-		 if($('.pass2').val()=="") {
-			 alert("비밀번호 확인 입력하세요");
-			 $('.pass2').focus();
-			 return false;
-		 }
-		 if($('.pass').val()!=$('.pass2').val()) {
-			 alert("비밀번호 틀림");
-			 $('.pass2').focus();
-			 return false;
-		 }
-		 if($('.email').val()=="") {
-			 alert("이메일 입력하세요");
-			 $('.email').focus();
-			 return false;
-		 }
-		 if($('.email2').val()=="") {
-			 alert("이메일 확인 입력하세요");
-			 $('.email2').focus();
-			 return false;
-		 }
-		 if($('.email').val()!=$('.email2').val()) {
-			 alert("이메일 재입력 틀림");
-			 $('.email2').focus();
-			 return false;
-		 }
-	 });
-	 
-	 $('.dup').click(function(){
+<!--  jquery.com -->
+ <script type="text/javascript" src="script/jquery-3.6.3.js"></script>
+ <script type="text/javascript">
+ 	// jQuery 준비 => 대상.함수()
+ 	$(document).ready(function(){
+//  		alert("준비");
+		//submit 버튼을 클릭했을때 폼태그 전송되어지면 이벤트 onsubmit()
+		// id="join" 폼태그 표시 => 전송
+		$('#join').submit(function(){
+// 			alert("전송");
+          // class="id" 표시  대상.함수()
+			if($('.id').val()==""){
+				alert("아이디 입력하세요");
+				$('.id').focus();
+				//대상 지정  * 전체, h1 태그, id=이름 #이름, class=이름 .이름
+// 				$('*').css('color','red');
+// 				$('form').css('color','blue');
+				return false;
+			}
+          //class="pass"
+            if($('.pass').val()==""){
+            	alert("비밀번호 입력하세요");
+				$('.pass').focus();
+				return false;
+            }
+          
+            if($('.pass2').val()==""){
+            	alert("비밀번호2 입력하세요");
+				$('.pass2').focus();
+				return false;
+            }
+            
+            if($('.pass').val() != $('.pass2').val()){
+            	alert("비밀번호 틀림");
+				$('.pass2').focus();
+				return false;
+            }
+            
+            if($('.name').val()==""){
+            	alert("이름 입력하세요");
+				$('.name').focus();
+				return false;
+            }
+            
+            if($('.email').val()==""){
+            	alert("이메일 입력하세요");
+				$('.email').focus();
+				return false;
+            }
+            
+            if($('.email2').val()==""){
+            	alert("이메일2 입력하세요");
+				$('.email2').focus();
+				return false;
+            }
+            
+            if($('.email').val() != $('.email2').val()){
+            	alert("이메일 틀림");
+				$('.email2').focus();
+				return false;
+            }
+          
+		});//
+		
+// 		class="dup" 클릭했을때
+		$('.dup').click(function(){
+// 			alert("클릭");
 			if($('.id').val()==""){
 				alert("아이디 입력하세요");
 				$('.id').focus();
 				return false;
 			}
-		
-			$.ajax({ //버튼에 J쿼리 -> ajax를 이용하여 페이지없이 바로 자바단으로 이동하여 DB후 자바단 결과 불러오기
+			// ajax
+			// 페이지 이동없이 디비에 가서 아이디 중복체크해서 결과를 가져와서 출력
+			// idCheck.jsp
+			$.ajax({
 				url:'MemberIdCheck.me',
-				data:{'id':$('.id').val()}, // key : value 형식으로 Parameter형식으로 url로 넘겨줌 
+				data:{'id':$('.id').val()},
 				success:function(result){
-			
+// 					alert(result);
+					// result.trim() => 결과값 앞뒤로 공백 제거
 					if(result.trim()=="아이디 중복"){
 						$('.divresult').html(result).css("color","red");
 					}else{
 						$('.divresult').html(result).css("color","blue");
 					}
 				}
-				
 			});
 			
+			
+			// class="divresult" => 아이디 중복
+// 			$('.divresult').html("아이디 중복").css("color","red");
+// 			$('.divresult').html("아이디 사용가능").css("color","blue");
+			
 		});
-	 
-	});
-</script>
 
+		
+		
+ 	});//준비
+ </script>
+ 
 </head>
 <body>
 <div id="wrap">
@@ -111,13 +144,12 @@
 <!-- 본문내용 -->
 <article>
 <h1>Join Us</h1>
-<form action="MemberInsertPro.me" id="join">
+<form action="MemberInsertPro.me" id="join" method="post">
 <fieldset>
 <legend>Basic Info</legend>
 <label>User ID</label>
 <input type="text" name="id" class="id">
 <input type="button" value="dup. check" class="dup"><br>
-
 <label></label>
 <div class="divresult">아이디 중복체크 결과</div><br>
 

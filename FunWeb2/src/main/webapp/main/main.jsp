@@ -25,53 +25,58 @@
  <![endif]--> 
 <script type="text/javascript" src="script/jquery-3.6.3.js"></script>
 <script type="text/javascript">
-/* <board>
-	 	<tr><subject>제목1</subject><date>2023-01-01</date></tr>
-	 	<tr><subject>제목2</subject><date>2023-01-02</date></tr>
-	 	<tr><subject>제목3</subject><date>2023-01-03</date></tr>
-	 </board> */
-/* 	 var arr = [{"subject":"제목1","date":"2023-01-01"},
-		 		{"subject":"제목2","date":"2023-01-02"},
-		 		{"subject":"제목3","date":"2023-01-03"}]; */
+//jQuery 준비 => 대상.함수()
 	$(document).ready(function(){
+// 		alert("준비");
+		// class="brown" 클릭했을때  "클릭"
 		$('.brown').click(function(){
-			alert("클릭");
+// 			alert("클릭");
+//         xml <= 디비에서 가져옴
+// <board>
+// 	<tr><subject>제목1</subject><date>2023-01-01</date></tr>
+// 	<tr><subject>제목2</subject><date>2023-01-02</date></tr>
+// 	<tr><subject>제목3</subject><date>2023-01-03</date></tr>
+// </board>
+
+//         자바스크립트 배열(json) <= 디비에서 가져옴
+// JSON ( 제이슨 , JavaScript Object Notation )
+// 			var arr=[
+// 				     {"subject":"제목1","date":"2023-01-01"},
+// 				     {"subject":"제목2","date":"2023-01-02"},
+// 				     {"subject":"제목3","date":"2023-01-03"}
+// 				    ];
+
+// [{"date":"2023.02.01","subject":"제목13","num":13},
+// 	{"date":"2023.02.01","subject":"제목12","num":12},
+// 	{"date":"2023.02.01","subject":"제목11","num":11},
+// 	{"date":"2023.02.01","subject":"제목10","num":10},
+// 	{"date":"2023.02.01","subject":"제목9","num":9}]
 			
+			//초기화
 			$('table').html('');
 			
 			$.ajax({
 				url:'BoardJson.bo',
 				dataType:'json',
 				success:function(arr){
+					
+//			        반복해서 출력 .each()
 					$.each(arr,function(index,item){
+//		 				alert(index);
+//		 				alert(item.subject);
+//		 				alert(item.date);
+//		               태그 뒤부분에 추가해서 넣기 append()
 						$('table').append('<tr><td class="contxt"><a href="#">'+item.subject+'</a></td><td>'+item.date+'</td></tr>');
-					});		
+					});
+					
 				}
-			
 			});
+
+
+
 
 		});
 	});
-		 		
-/* 		 		$(document).ready(function(){ 
-		 			$('.brown').click(function(){
-		 				alert("클릭");
-		 				
-		 				$('table').html('');
-		 				
-		 				$.ajax({
-		 					url:'jsonArray.jsp',
-		 					dataType:'json',
-		 					success:function(arr){
-		 						$.each(arr,function(index,item){
-		 							$('table').append('<tr><td class="contxt"><a href="#">'+item.subject+'</a></td><td>'+item.date+'</td></tr>');
-		 						});		
-		 					}
-		 				
-		 				});
-
-		 			});
-		 		}); */
 </script>
 </head>
 <body>
@@ -125,16 +130,27 @@ quis ante......</dd>
 <div id="news_notice">
 <h3 class="brown">News &amp; Notice</h3>
 <table>
-<!-- <tr><td class="contxt"><a href="#">Vivans....</a></td>
-    <td>2012.11.02</td></tr>
-<tr><td class="contxt"><a href="#">Vivans....</a></td>
-    <td>2012.11.02</td></tr>
-<tr><td class="contxt"><a href="#">Vivans....</a></td>
-    <td>2012.11.02</td></tr>
-<tr><td class="contxt"><a href="#">Vivans....</a></td>
-    <td>2012.11.02</td></tr>
-<tr><td class="contxt"><a href="#">Vivans....</a></td>
-    <td>2012.11.02</td></tr> -->
+			<%
+// 			BoardDAO dao=new BoardDAO();
+// 			List<BoardDTO> boardList=dao.getBoardList(1, 5);
+// 			for(int i=0;i<boardList.size();i++){
+// 				BoardDTO dto=boardList.get(i);
+				%>
+<%-- 	<tr><td class="contxt"><a href="#"><%=dto.getSubject() %></a></td>  --%>
+<%--     <td><%=dto.getDate() %></td></tr>			 --%>
+				<%
+// 			}
+			%>
+<!-- <tr><td class="contxt"><a href="#">Vivans....</a></td> -->
+<!--     <td>2012.11.02</td></tr> -->
+<!-- <tr><td class="contxt"><a href="#">Vivans....</a></td> -->
+<!--     <td>2012.11.02</td></tr> -->
+<!-- <tr><td class="contxt"><a href="#">Vivans....</a></td> -->
+<!--     <td>2012.11.02</td></tr> -->
+<!-- <tr><td class="contxt"><a href="#">Vivans....</a></td> -->
+<!--     <td>2012.11.02</td></tr> -->
+<!-- <tr><td class="contxt"><a href="#">Vivans....</a></td> -->
+<!--     <td>2012.11.02</td></tr> -->
 </table>
 </div>
 </article>
